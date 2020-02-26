@@ -1,0 +1,378 @@
+using System;
+using System.Windows.Forms;
+using Wpf_Documents_;
+
+
+namespace FormTest
+{
+    public partial class test1 : Form
+    {
+        int count = 0; //номер вопроса
+        int max = 11; //количество вопросов(записаных при созданиие массива вопросов)
+       
+       public static int res; //количество правильных ответов
+        Questions[] q1;
+
+        class Questions //класс в котором будет храниться вопрос, варианты ответа и правильный ответ
+        {
+            private string qustion;  // вопрос
+
+            public string Qustion
+            {
+                get { return qustion; }
+                set { qustion = value; }
+            }
+            private string answer1;   //ответ а)
+
+            public string Answer1
+            {
+                get { return answer1; }
+                set { answer1 = value; }
+            }
+            private string answer2;   //ответ б)
+
+            public string Answer2
+            {
+                get { return answer2; }
+                set { answer2 = value; }
+            }
+            private string answer3;   // ответ в)
+
+            public string Answer3
+            {
+                get { return answer3; }
+                set { answer3 = value; }
+            }
+            private string answer4;  // ответ г)
+
+            public string Answer4
+            {
+                get { return answer4; }
+                set { answer4 = value; }
+            }
+            private string res;      //правильный ответ
+
+            public string Res
+            {
+                get { return res; }
+                set { res = value; }
+            }
+
+            public Questions(string _question, string a, string b, string c, string d, string r)
+            {
+                this.qustion = _question;
+                this.answer1 = a;
+                this.answer2 = b;
+                this.answer3 = c;
+                this.answer4 = d;
+                this.res = r;
+
+            }
+        }
+        public test1()
+        {
+            InitializeComponent();
+            //создаем массив с вопросами, вариантами ответов и правильным ответом
+            Questions[] q = { new Questions("1.	Какие элементы обеспечивают распространения информации?", "a.1989 год", "b.1988 год", "c.1986 год", "d.1990 год", "b"),
+                            new Questions("2.	Чем канал отличается от линии связи?", "a.Янукович", "b.Тимошенко", "c.Кучма", "d.Мороз", "a"),
+                            new Questions( "3.	Что такое емкость канала?","a.f","b.m","c.i","d.r","c"),
+                            new Questions ("4.	Чем бод отличается от бит.с?","a","b","c","d","a"),
+                            new Questions ("5.	Чем определяется максимально возможная пропускная способность идеального канала связи?","a","b","c","d","a"),
+                            new Questions ("6.	Чем достоверность передачи информации отличается от ее надежности?","a","b","c","d","a"),
+                            new Questions ("7.	Как классифицируются линии связи?","a","b","c","d","a"),
+                            new Questions ("8.	Какие функции выполняет модем?","a","b","c","d","a"),
+                            new Questions ("9.	Что такое коммуникации и какие они бывают?","a","b","c","d","a"),
+                            new Questions ("10.	Что такое компьютерная коммуникационная среда?","a","b","c","d","a"),
+                            new Questions ("11.	Привидите основные характеристики кабелей?","a","b","c","d","a")};
+            q1 = q;
+            //задаем первый вопрос
+            label1.Text = q[0].Qustion;
+            //варианты ответа
+            radioButton1.Text = q[0].Answer1;
+            radioButton2.Text = q[0].Answer2;
+            radioButton3.Text = q[0].Answer3;
+            radioButton4.Text = q[0].Answer4;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (count < max) //проверям количество заданых вопросов(больше чем есть в массиве задать не можем)
+            {
+                // сравниваем выбраный вариант с правильным
+                if (radioButton1.Checked == true)
+                {
+                    if (q1[count].Res == "a")
+                    { res++; } //если совпали, то количество правильных вопросов увеличиваем на 1
+                }
+                if (radioButton2.Checked == true)
+                {
+                    if (q1[count].Res == "b")
+                    { res++; }
+                }
+                if (radioButton3.Checked == true)
+                {
+                    if (q1[count].Res == "c")
+                    { res++; }
+                }
+                if (radioButton4.Checked == true)
+                {
+                    if (q1[count].Res == "d")
+                    { res++; }
+                }
+                count++;
+                if (count < max)
+                {
+                    label1.Text = q1[count].Qustion; //задаем слудующий вопрос
+                    radioButton1.Text = q1[count].Answer1;
+                    radioButton2.Text = q1[count].Answer2;
+                    radioButton3.Text = q1[count].Answer3;
+                    radioButton4.Text = q1[count].Answer4;
+                    radioButton1.Checked = false;
+                    radioButton2.Checked = false;
+                    radioButton3.Checked = false;
+                    radioButton4.Checked = false;
+                }
+                else
+                {
+                    if (res >= 9) {
+                        pere2.Enabled = true;
+                        button1.Enabled = false; // делаем кнопку на рабочей
+                        label2.Text = "Количество правильных ответов: " + Convert.ToString(res);//выводим результат
+                        Perem.test1result = true; }
+                    else
+                    {
+                        MessageBox.Show("Вы провалили тест, оценка 2. Чтобы пройти заново, выйдите в меню глав!");
+                    }
+                }
+
+            }
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void Pere2_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            menu.Form2 wq1 = new menu.Form2();
+            wq1.Show();
+       
+        }
+
+        private void Perezag_Click(object sender, EventArgs e)
+        {
+
+            this.Hide();
+            menu.Form2 wq1 = new menu.Form2();
+            wq1.Show();
+        }
+
+        private void back_Click(object sender, EventArgs e)
+        {
+            if (count >0)
+            {
+                label1.Text = q1[count].Qustion; //задаем слудующий вопрос
+                radioButton1.Text = q1[count].Answer1;
+                radioButton2.Text = q1[count].Answer2;
+                radioButton3.Text = q1[count].Answer3;
+                radioButton4.Text = q1[count].Answer4;
+                radioButton1.Checked = false;
+                radioButton2.Checked = false;
+                radioButton3.Checked = false;
+                radioButton4.Checked = false;
+            }
+        }
+    }
+}
+using System;
+using System.Windows.Forms;
+using Wpf_Documents_;
+
+
+namespace FormTest
+{
+    public partial class test1 : Form
+    {
+        int count = 0; //номер вопроса
+        int max = 11; //количество вопросов(записаных при созданиие массива вопросов)
+       
+       public static int res; //количество правильных ответов
+        Questions[] q1;
+
+        class Questions //класс в котором будет храниться вопрос, варианты ответа и правильный ответ
+        {
+            private string qustion;  // вопрос
+
+            public string Qustion
+            {
+                get { return qustion; }
+                set { qustion = value; }
+            }
+            private string answer1;   //ответ а)
+
+            public string Answer1
+            {
+                get { return answer1; }
+                set { answer1 = value; }
+            }
+            private string answer2;   //ответ б)
+
+            public string Answer2
+            {
+                get { return answer2; }
+                set { answer2 = value; }
+            }
+            private string answer3;   // ответ в)
+
+            public string Answer3
+            {
+                get { return answer3; }
+                set { answer3 = value; }
+            }
+            private string answer4;  // ответ г)
+
+            public string Answer4
+            {
+                get { return answer4; }
+                set { answer4 = value; }
+            }
+            private string res;      //правильный ответ
+
+            public string Res
+            {
+                get { return res; }
+                set { res = value; }
+            }
+
+            public Questions(string _question, string a, string b, string c, string d, string r)
+            {
+                this.qustion = _question;
+                this.answer1 = a;
+                this.answer2 = b;
+                this.answer3 = c;
+                this.answer4 = d;
+                this.res = r;
+
+            }
+        }
+        public test1()
+        {
+            InitializeComponent();
+            //создаем массив с вопросами, вариантами ответов и правильным ответом
+            Questions[] q = { new Questions("1.	Какие элементы обеспечивают распространения информации?", "a.1989 год", "b.1988 год", "c.1986 год", "d.1990 год", "b"),
+                            new Questions("2.	Чем канал отличается от линии связи?", "a.Янукович", "b.Тимошенко", "c.Кучма", "d.Мороз", "a"),
+                            new Questions( "3.	Что такое емкость канала?","a.f","b.m","c.i","d.r","c"),
+                            new Questions ("4.	Чем бод отличается от бит.с?","a","b","c","d","a"),
+                            new Questions ("5.	Чем определяется максимально возможная пропускная способность идеального канала связи?","a","b","c","d","a"),
+                            new Questions ("6.	Чем достоверность передачи информации отличается от ее надежности?","a","b","c","d","a"),
+                            new Questions ("7.	Как классифицируются линии связи?","a","b","c","d","a"),
+                            new Questions ("8.	Какие функции выполняет модем?","a","b","c","d","a"),
+                            new Questions ("9.	Что такое коммуникации и какие они бывают?","a","b","c","d","a"),
+                            new Questions ("10.	Что такое компьютерная коммуникационная среда?","a","b","c","d","a"),
+                            new Questions ("11.	Привидите основные характеристики кабелей?","a","b","c","d","a")};
+            q1 = q;
+            //задаем первый вопрос
+            label1.Text = q[0].Qustion;
+            //варианты ответа
+            radioButton1.Text = q[0].Answer1;
+            radioButton2.Text = q[0].Answer2;
+            radioButton3.Text = q[0].Answer3;
+            radioButton4.Text = q[0].Answer4;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (count < max) //проверям количество заданых вопросов(больше чем есть в массиве задать не можем)
+            {
+                // сравниваем выбраный вариант с правильным
+                if (radioButton1.Checked == true)
+                {
+                    if (q1[count].Res == "a")
+                    { res++; } //если совпали, то количество правильных вопросов увеличиваем на 1
+                }
+                if (radioButton2.Checked == true)
+                {
+                    if (q1[count].Res == "b")
+                    { res++; }
+                }
+                if (radioButton3.Checked == true)
+                {
+                    if (q1[count].Res == "c")
+                    { res++; }
+                }
+                if (radioButton4.Checked == true)
+                {
+                    if (q1[count].Res == "d")
+                    { res++; }
+                }
+                count++;
+                if (count < max)
+                {
+                    label1.Text = q1[count].Qustion; //задаем слудующий вопрос
+                    radioButton1.Text = q1[count].Answer1;
+                    radioButton2.Text = q1[count].Answer2;
+                    radioButton3.Text = q1[count].Answer3;
+                    radioButton4.Text = q1[count].Answer4;
+                    radioButton1.Checked = false;
+                    radioButton2.Checked = false;
+                    radioButton3.Checked = false;
+                    radioButton4.Checked = false;
+                }
+                else
+                {
+                    if (res >= 9) {
+                        pere2.Enabled = true;
+                        button1.Enabled = false; // делаем кнопку на рабочей
+                        label2.Text = "Количество правильных ответов: " + Convert.ToString(res);//выводим результат
+                        Perem.test1result = true; }
+                    else
+                    {
+                        MessageBox.Show("Вы провалили тест, оценка 2. Чтобы пройти заново, выйдите в меню глав!");
+                    }
+                }
+
+            }
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void Pere2_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            menu.Form2 wq1 = new menu.Form2();
+            wq1.Show();
+       
+        }
+
+        private void Perezag_Click(object sender, EventArgs e)
+        {
+
+            this.Hide();
+            menu.Form2 wq1 = new menu.Form2();
+            wq1.Show();
+        }
+
+        private void back_Click(object sender, EventArgs e)
+        {
+            if (count >0)
+            {
+                label1.Text = q1[count].Qustion; //задаем слудующий вопрос
+                radioButton1.Text = q1[count].Answer1;
+                radioButton2.Text = q1[count].Answer2;
+                radioButton3.Text = q1[count].Answer3;
+                radioButton4.Text = q1[count].Answer4;
+                radioButton1.Checked = false;
+                radioButton2.Checked = false;
+                radioButton3.Checked = false;
+                radioButton4.Checked = false;
+            }
+        }
+    }
+}
